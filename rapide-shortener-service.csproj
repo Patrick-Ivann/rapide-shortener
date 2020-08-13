@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Protobuf Include="Protos\shorten.proto" GrpcServices="Server"/>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Grpc.AspNetCore" Version="2.27.0"/>
+    <PackageReference Include="MongoDB.Driver" Version="2.11.0"/>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.0"/>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="3.1.6"/>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="4.1.1"/>
+    <PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.30.0"/>
+    <PackageReference Include="OpenGraph-Net" Version="3.2.4"/>
+  </ItemGroup>
+</Project>

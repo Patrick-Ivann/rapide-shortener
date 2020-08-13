@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+option csharp_namespace = "rapide_shortener_service";
+option go_package = ".;shortener";
+
+package shortener;
+
+
+service ShortenerServiceGrpc {
+    rpc Shorten (ShortenRequest) returns (ShortenResponse){};
+}
+
+
+message ShortenRequest {
+    string url = 1;
+    string id = 2;
+}
+message ShortenResponse {
+    string url = 1;
+	string ok = 2;
+}

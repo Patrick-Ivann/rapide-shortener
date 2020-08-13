@@ -1,0 +1,25 @@
+### DotnetCore ###
+# .NET Core build folders
+bin/
+obj/
+# Visual Studio Code
+.vscode
+
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+build/
+bld/
+[Bb]in/
+[Oo]bj/
+msbuild.log
+msbuild.err
+msbuild.wrn
+
+
+appsettings.*
