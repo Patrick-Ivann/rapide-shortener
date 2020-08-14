@@ -18,8 +18,8 @@ jobs:
           command: |
             TAG=0.$CIRCLE_BUILD_NUM
             echo "$GitHub_action_password" | docker login docker.pkg.github.com -u $GitHub_login --password-stdin
-            docker build -t docker.pkg.github.com/patrick-ivann/rapide-shortener/production:$TAG -f dockerfile --network=host --build-arg RapideShortener_Kestrel__EndpointDefaults__Protocols=$RapideShortener_Kestrel__EndpointDefaults__Protocols --build-arg RapideShortener_URLDatabaseSettings__ConnectionString=$RapideShortener_URLDatabaseSettings__ConnectionString --build-arg RapideShortener_URLDatabaseSettings__DatabaseName=$RapideShortener_URLDatabaseSettings__DatabaseName --build-arg RapideShortener_URLDatabaseSettings__UrlCollectionName=$RapideShortener_URLDatabaseSettings__UrlCollectionName .
-            docker push docker.pkg.github.com/patrick-ivann/rapide-shortener/production:$TAG
+            docker build -t docker.pkg.github.com/patrick-ivann/rapide-shortener/shortener:$TAG -f dockerfile --network=host --build-arg RapideShortener_Kestrel__EndpointDefaults__Protocols=$RapideShortener_Kestrel__EndpointDefaults__Protocols --build-arg RapideShortener_URLDatabaseSettings__ConnectionString=$RapideShortener_URLDatabaseSettings__ConnectionString --build-arg RapideShortener_URLDatabaseSettings__DatabaseName=$RapideShortener_URLDatabaseSettings__DatabaseName --build-arg RapideShortener_URLDatabaseSettings__UrlCollectionName=$RapideShortener_URLDatabaseSettings__UrlCollectionName .
+            docker push docker.pkg.github.com/patrick-ivann/rapide-shortener/shortener:$TAG
       - run:
           name: Deploy app to AWS EC2 Server via Docker
           command: |
