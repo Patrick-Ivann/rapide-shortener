@@ -33,8 +33,8 @@ namespace rapide_shortener_service
                 config.Sources.Remove(
                 config.Sources.First(source =>
                 source.GetType() == typeof(EnvironmentVariablesConfigurationSource))); //remove the default one first
+                if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development") { config.AddJsonFile(Path.Combine(AppContext.BaseDirectory, "appsettings.json"), true, true); }
                 config.AddEnvironmentVariables(prefix: "RapideShortener_");
-                config.AddJsonFile(Path.Combine(AppContext.BaseDirectory, "appsettings.json"), false, true);
             })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
