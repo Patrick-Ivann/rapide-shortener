@@ -35,11 +35,7 @@ namespace rapide_shortener_service.Controller
         public IActionResult Get([FromRoute] string shorturlString, bool redirect = true)
         {
 
-            var result = _shortenerService.Get(shorturlString);
-
-            System.Console.WriteLine("jfhsdjkfhsjdhfksdjh");
-            logger.LogDebug("fjshdkfjhf");
-            logger.LogDebug(shorturlString);
+            var result = _shortenerService.Get("https://share.lunaar.net/" + shorturlString);
 
             if (result != null)
             {
