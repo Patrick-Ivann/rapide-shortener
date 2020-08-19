@@ -15,6 +15,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using rapide_shortener_service.Model;
 using rapide_shortener_service.Services;
+using Prometheus;
 namespace rapide_shortener_service
 {
     public class Startup
@@ -51,6 +52,8 @@ namespace rapide_shortener_service
             }
             Console.WriteLine($"URLDatabaseSettings:ConnectionString : {Configuration["URLDatabaseSettings:ConnectionString"]}");
             app.UseRouting();
+            app.UseGrpcMetrics();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGrpcService<Controller.ShortenerGrpcController>();
