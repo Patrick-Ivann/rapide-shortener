@@ -3,12 +3,14 @@ ARG RapideShortener_URLDatabaseSettings__ConnectionString
 ARG RapideShortener_URLDatabaseSettings__DatabaseName
 ARG RapideShortener_URLDatabaseSettings__UrlCollectionName
 
+FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+
 ENV RapideShortener_Kestrel__EndpointDefaults__Protocols = ${RapideShortener_Kestrel__EndpointDefaults__Protocols}
 ENV RapideShortener_URLDatabaseSettings__ConnectionString = ${RapideShortener_URLDatabaseSettings__ConnectionString}
 ENV RapideShortener_URLDatabaseSettings__DatabaseName = ${RapideShortener_URLDatabaseSettings__DatabaseName}
 ENV RapideShortener_URLDatabaseSettings__UrlCollectionName = ${RapideShortener_URLDatabaseSettings__UrlCollectionName}
 
-FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build
+
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
