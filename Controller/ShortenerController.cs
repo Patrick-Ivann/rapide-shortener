@@ -10,11 +10,10 @@ namespace rapide_shortener_service.Controller
 {
     [ApiVersion("1.0")]
     [ApiController]
-    [Route("api/v{version:apiVersion}/[controller]")]
+    //[Route("api/v{version:apiVersion}/[controller]")]
+    [Route("/")]
     public class ShortenerController : ControllerBase
     {
-
-        //   private IShortenerService shortUrlService;
 
         private readonly ILogger<ShortenerController> logger;
         private readonly ShortenerService _shortenerService;
@@ -26,7 +25,6 @@ namespace rapide_shortener_service.Controller
 
         }
 
-        // GET: api/Default
         [HttpGet]
         public ActionResult<List<URLModel>> Get()
         {
@@ -47,19 +45,12 @@ namespace rapide_shortener_service.Controller
             {
                 if (redirect)
                 {
-
                     var metadatas = _shortenerService.ScrapMeta(result.OriginalURL).GetAwaiter().GetResult();
-                    //var html = _shortenerService.GenerateHtml(metadatas);
                     return new ContentResult()
                     {
                         Content = metadatas,
                         ContentType = "text/html",
                     };
-
-
-
-                    //return Ok();
-                    //return Redirect(result.OriginalURL);
                 }
                 else
                 {
@@ -70,7 +61,5 @@ namespace rapide_shortener_service.Controller
 
             return NotFound();
         }
-
-
     }
 }
