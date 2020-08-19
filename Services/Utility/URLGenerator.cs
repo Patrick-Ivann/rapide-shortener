@@ -17,7 +17,7 @@ namespace rapide_shortener_service.Services.Utility
               .ForEach(i => urlsafe += Convert.ToChar(i));
             string token = urlsafe.Substring(new Random().Next(0, urlsafe.Length), new Random().Next(2, 6));
 
-            return token;
+            return "https://share.lunaar.net/" + token;
 
         }
     }
