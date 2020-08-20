@@ -25,14 +25,13 @@ namespace rapide_shortener_service.Controller
 
             this.logger.LogInformation($"url received, url: {request.Url} , id: {request.Id} ");
 
-            DateTime created_at = new DateTime();
             ObjectId newId = new ObjectId();
             String newUrl = _shortenerService.CreateUrl();
 
 
             try
             {
-                _shortenerService.Create(new Model.URLModel { OriginalURL = request.Url, CreatedAt = created_at, UpdatedAt = created_at, Id = newId, ShortURL = newUrl });
+                _shortenerService.Create(new Model.URLModel { OriginalURL = request.Url, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now, Id = newId, ShortURL = newUrl });
                 return Task.FromResult(new ShortenResponse { Ok = "Ok", Url = newUrl });
 
             }
