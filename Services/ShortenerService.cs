@@ -88,14 +88,36 @@ namespace rapide_shortener_service.Services
 
         public string CreateUrl() => URLGenerator.GenerateShortUrl();
 
+        public string SplitAnchorAndUrl(string url)
+        {
+            return url.Split("#")[0];
+        }
 
         public async Task<String> ScrapMeta(string url)
         {
-            OpenGraph graph = await OpenGraph.ParseUrlAsync(url);
-            HtmlDocument pageDocument = new HtmlDocument();
-            pageDocument.LoadHtml(graph.ToString());
-            string newContent = "<html><head><title>Fc lunaar</title>" + pageDocument.DocumentNode.OuterHtml + "</head><body></body></html><script>window.location.replace('" + url + "')</script>";
-            return newContent;
+            try
+            {
+                System.Console.WriteLine(SplitAnchorAndUrl(url));
+                OpenGraph graph = await OpenGraph.ParseUrlAsync(SplitAnchorAndUrl(url));
+                HtmlDocument pageDocument = new HtmlDocument();
+                pageDocument.LoadHtml(graph.ToString());
+                string newContent = "<html><head><title>Fc lunaar</title>" + pageDocument.DocumentNode.OuterHtml + "</head><body></body></html><script>window.location.replace('" + url + "')</script>";
+                return newContent;
+            }
+            catch (System.Exception)
+            {
+
+                string newContent = @"<html><head><title>Fc lunaar</title>
+                                    <meta name= 'description' content='Shared Resource from Lunaar Application>< meta property = 'og:title' content = 'Welcome to Lunaar!' >
+                                    <meta property ='og:description' content='Shared Resource from Lunaar Application'>
+                                    <meta property ='og:type' content='website'>
+                                    <meta property ='og:image' content='https://i.postimg.cc/pPGJSKfy/OG-Image.png'>
+                                    <meta property ='twitter:image' content ='https://i.postimg.cc/pPGJSKfy/OG-Image.png'>
+                                    </head>
+                                    <body></body></html><script>window.location.replace('" + url + "')</script>";
+                return newContent;
+
+            }
 
 
         }
