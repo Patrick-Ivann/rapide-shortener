@@ -25,11 +25,6 @@ namespace rapide_shortener_service.Controller
 
         }
 
-        [HttpGet]
-        public ActionResult<List<URLModel>> Get()
-        {
-            return _shortenerService.Get();
-        }
 
         [HttpGet("{shorturlString}")]
         public IActionResult Get([FromRoute] string shorturlString, bool redirect = true)
