@@ -12,7 +12,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using HtmlAgilityPack;
 using OpenGraphNet;
-using OpenGraphNet.Metadata;
+using Newtonsoft.Json;
 
 namespace rapide_shortener_service.Services
 {
@@ -43,6 +43,31 @@ namespace rapide_shortener_service.Services
             : base(String.Format("This hash already exists", name))
         {
 
+        }
+
+    }
+
+    class RawMetadata
+    {
+        public string local
+        {
+            get;
+            set;
+        }
+        public string title
+        {
+            get;
+            set;
+        }
+        public string description
+        {
+            get;
+            set;
+        }
+        public string image
+        {
+            get;
+            set;
         }
 
     }
@@ -116,6 +141,47 @@ namespace rapide_shortener_service.Services
                                     </head>
                                     <body></body></html><script>window.location.replace('" + url + "')</script>";
                 return newContent;
+
+            }
+
+
+        }
+        public async Task<String> ScrapMetaRaw(string url)
+        {
+            try
+            {
+                OpenGraph graph = await OpenGraph.ParseUrlAsync(SplitAnchorAndUrl(url));
+                HtmlDocument pageDocument = new HtmlDocument();
+                pageDocument.LoadHtml(graph.ToString());
+
+                RawMetadata newMetadata = new RawMetadata();
+
+
+                if (graph.Metadata.ContainsKey("og:locale"))
+                {
+                    newMetadata.local = graph.Metadata["og:locale"][0].Value;
+                }
+                if (graph.Metadata.ContainsKey("og:title"))
+                {
+                    newMetadata.title = graph.Metadata["og:title"][0].Value;
+                }
+                if (graph.Metadata.ContainsKey("og:description"))
+                {
+                    newMetadata.description = graph.Metadata["og:description"][0].Value;
+                }
+                if (graph.Metadata.ContainsKey("og:image"))
+                {
+                    newMetadata.image = graph.Metadata["og:image"][0].Value;
+                }
+
+                string json = JsonConvert.SerializeObject(newMetadata);
+
+                return json;
+            }
+            catch (System.Exception)
+            {
+
+                return JsonConvert.SerializeObject(new { });
 
             }
 
