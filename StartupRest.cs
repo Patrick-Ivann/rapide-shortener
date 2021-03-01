@@ -14,6 +14,8 @@ namespace rapide_shortener_service
 {
     public class StartupRest
     {
+        readonly string LocalhostAllowSpecificOrigins = "_localhostAllowSpecificOrigins";
+
         public StartupRest(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,6 +27,7 @@ namespace rapide_shortener_service
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.Configure<URLDatabaseSettings>(
                Configuration.GetSection(nameof(URLDatabaseSettings)));
 
@@ -53,6 +56,20 @@ namespace rapide_shortener_service
 
                 });
             });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: LocalhostAllowSpecificOrigins,
+                         builder =>
+                         {
+                             builder.WithOrigins("http://localhost:3000",
+                                                 "http://center.lunaar.app",
+                                                 "http://center.staging.lunaar.app")
+                                                 .AllowAnyHeader()
+                                                 .WithMethods("POST", "GET");
+                         });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -79,7 +96,7 @@ namespace rapide_shortener_service
 
 
             app.UseRouting();
-
+            app.UseCors(LocalhostAllowSpecificOrigins);
             app.UseHttpMetrics();
             app.UseMetricServer();
             app.UseEndpoints(endpoints =>
