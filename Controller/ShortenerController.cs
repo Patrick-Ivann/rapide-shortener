@@ -53,8 +53,8 @@ namespace rapide_shortener_service.Controller
             return NotFound();
         }
 
-        [HttpPost()]
-        public IActionResult Post([FromQuery(Name = "url")] string url)
+        [HttpGet()]
+        public IActionResult GetMetadata([FromQuery(Name = "url")] string url)
         {
             var metadatas = _shortenerService.ScrapMetaRaw(url).GetAwaiter().GetResult();
             return new ContentResult()
