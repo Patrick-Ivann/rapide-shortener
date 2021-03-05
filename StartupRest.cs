@@ -62,7 +62,12 @@ namespace rapide_shortener_service
                 options.AddPolicy(name: LocalhostAllowSpecificOrigins,
                          builder =>
                          {
-                             builder.AllowAnyOrigin()
+                             builder.WithOrigins("http://localhost:3000",
+                                                 "http://localhost:6677"
+                                                 "https://center.lunaar.app",
+                                                 "https://center.staging.lunaar.app",
+                                                 "https://traefik.lunaar.net",
+                                                 "http://traefik.lunaar.net")
                                                  .AllowCredentials()
                                                  .AllowAnyHeader()
                                                  .WithMethods("POST", "GET");
