@@ -50,10 +50,10 @@ jobs:
           push: true
           tags: "ghcr.io/patrick-ivann/rapide-shortener:${{github.sha}}"
           args: |
-            RapideShortener_Kestrel__EndpointDefaults__Protocols=${{PROTOCOLS}}
-            RapideShortener_URLDatabaseSettings__ConnectionString=${{CONNECTION_STRING}}
-            RapideShortener_URLDatabaseSettings__DatabaseName=${{DATABASE_NAME}}
-            RapideShortener_URLDatabaseSettings__UrlCollectionName=${{URL_COLLECTION_NAME}}
+            RapideShortener_Kestrel__EndpointDefaults__Protocols=${{ env.PROTOCOLS }}
+            RapideShortener_URLDatabaseSettings__ConnectionString=${{ env.CONNECTION_STRING }}
+            RapideShortener_URLDatabaseSettings__DatabaseName=${{ env.DATABASE_NAME }}
+            RapideShortener_URLDatabaseSettings__UrlCollectionName=${{ env.URL_COLLECTION_NAME }}
 
   deploy:
     needs: build
