@@ -38,12 +38,22 @@ jobs:
           password: ${{ secrets.PA_TOKEN }}
       -
         name: Build and push
+        env:
+          Protocols: "Http2" 
+          CONNECTION_STRING: "mongodb+srv://rapide-julien:J7lwunpO6Q056Fil@mongodb-rapide-cluster-hehrd.mongodb.net/test?authSource=admin&replicaSet=mongodb-rapide-cluster-shard-0&readPreference=primary&appname=MongoDB%20Compass%20Community%20Beta&ssl=true"
+          DATABASE_NAME: rapide
+          URL_COLLECTION_NAME: urls
         if: contains(github.event.head_commit.message, ':rocket:')
         uses: docker/build-push-action@v2
         with:
           context: .
           push: true
           tags: "ghcr.io/patrick-ivann/rapide-shortener:${{github.sha}}"
+          args: |
+            RapideShortener_Kestrel__EndpointDefaults__Protocols=${{Protocols}}
+            RapideShortener_URLDatabaseSettings__ConnectionString=${{CONNECTION_STRING}}
+            RapideShortener_URLDatabaseSettings__DatabaseName=${{DATABASE_NAME}}
+            RapideShortener_URLDatabaseSettings__UrlCollectionName=${{URL_COLLECTION_NAME}}
 
   deploy:
     needs: build
