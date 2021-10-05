@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ${APP_NAME}
+  namespace: ${NAMESPACE}
+  annotations:
+    LUNAAR/APPLICATION-TYPE: ${APP_NAME}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ${APP_NAME}
+  template:
+    metadata:
+      name: ${APP_NAME}
+      labels:
+        app: ${APP_NAME}
+    spec:
+      imagePullSecrets:
+        - name: github-registry
+      containers:
+      - name: ${APP_NAME}
+        image: ${IMAGE}:${IMAGE_TAG}
+        ports:
+          - name: web
+            containerPort: 3333
+          - name: grpc
+            containerPort: 5001
+        resources:
+          limits:
+            cpu: "100m"
+            memory: "100Mi"
+          requests: 
+            cpu: "50m"
+            memory: "50Mi"

@@ -1,0 +1,45 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ${APP_NAME}
+  namespace: ${NAMESPACE}
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/hsts: "false"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/ingress.allow-http: "true"
+    enable-underscores-in-headers: "true"
+    cert-manager.io/cluster-issuer: issuer-${NAMESPACE}
+spec:
+  tls:
+  - hosts:
+    - ${FULL_DOMAIN}
+    secretName: ${APP_NAME}-tls
+  defaultBackend:
+    service:
+      name: ${APP_NAME}
+      port:
+        number: 3333 
+  rules:
+  - host: ${FULL_DOMAIN_GRPC}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ${APP_NAME}
+            port:
+              name: grpc
+  - host: ${FULL_DOMAIN}
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: ${APP_NAME}
+            port:
+              name: web
