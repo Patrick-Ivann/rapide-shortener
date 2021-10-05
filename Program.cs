@@ -33,15 +33,15 @@ namespace rapide_shortener_service
                 config.Sources.Remove(
                 config.Sources.First(source =>
                 source.GetType() == typeof(EnvironmentVariablesConfigurationSource))); //remove the default one first
+                if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development") { config.AddJsonFile(Path.Combine(AppContext.BaseDirectory, "appsettings.json"), true, true); }
                 config.AddEnvironmentVariables(prefix: "RapideShortener_");
-                config.AddJsonFile(Path.Combine(AppContext.BaseDirectory, "appsettings.json"), false, true);
             })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.ConfigureKestrel(options =>
                     {
                         // Setup a HTTP/2 endpoint without TLS.
-                        options.ListenLocalhost(5001, o => o.Protocols = HttpProtocols.Http2);
+                        options.ListenAnyIP(5001, o => o.Protocols = HttpProtocols.Http2);
                     });
                     webBuilder.UseStartup<Startup>();
                 });
@@ -52,16 +52,17 @@ namespace rapide_shortener_service
                 config.Sources.Remove(
                 config.Sources.First(source =>
                 source.GetType() == typeof(EnvironmentVariablesConfigurationSource))); //remove the default one first
+                if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Development") { config.AddJsonFile(Path.Combine(AppContext.BaseDirectory, "appsettings.json"), true, true); }
                 config.AddEnvironmentVariables(prefix: "RapideShortener_");
-                config.AddJsonFile(Path.Combine(AppContext.BaseDirectory, "appsettings.json"), false, true);
-                System.Console.WriteLine(Environment.GetEnvironmentVariable("URLDatabaseSettings_ConnectionString=test"));
+                System.Console.WriteLine(Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT"));
             })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.ConfigureKestrel(options =>
                     {
                         // Setup a HTTP/2 endpoint without TLS.
-                        options.ListenLocalhost(3333, o => o.Protocols = HttpProtocols.Http1);
+
+                        options.ListenAnyIP(3333, o => o.Protocols = HttpProtocols.Http1);
                     });
                     webBuilder.UseStartup<StartupRest>();
                 });
