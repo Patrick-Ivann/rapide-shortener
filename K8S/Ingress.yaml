@@ -4,18 +4,15 @@ metadata:
   name: ${APP_NAME}
   namespace: ${NAMESPACE}
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/hsts: "false"
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
     nginx.ingress.kubernetes.io/backend-protocol: "GRPC"
     kubernetes.io/ingress.class: nginx
-    kubernetes.io/ingress.allow-http: "true"
-    enable-underscores-in-headers: "true"
     cert-manager.io/cluster-issuer: issuer-${NAMESPACE}
 spec:
   tls:
   - hosts:
     - ${FULL_DOMAIN}
+    - ${FULL_DOMAIN_GRPC}
     secretName: ${APP_NAME}-tls
   defaultBackend:
     service:
@@ -32,7 +29,7 @@ spec:
           service:
             name: ${APP_NAME}
             port:
-              name: grpc
+              number: 5001
   - host: ${FULL_DOMAIN}
     http:
       paths:
@@ -42,4 +39,4 @@ spec:
           service:
             name: ${APP_NAME}
             port:
-              name: web
+              number: 3333
