@@ -8,9 +8,11 @@ metadata:
 spec:
   ports:
   - port: 5001
+    name: grpc
     protocol: TCP
     targetPort: 5001
   - port: 3333
+    name: web
     protocol: TCP
     targetPort: 3333
   selector:
