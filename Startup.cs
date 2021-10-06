@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Reflection;
+using System.Collections;
 using System.IO;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,6 +52,11 @@ namespace rapide_shortener_service
                 app.UseDeveloperExceptionPage();
             }
             Console.WriteLine($"URLDatabaseSettings:ConnectionString : {Configuration["URLDatabaseSettings:ConnectionString"]}");
+            foreach (DictionaryEntry e in System.Environment.GetEnvironmentVariables())
+            {
+                Console.WriteLine(e.Key + ":" + e.Value);
+            }
+
             app.UseRouting();
             app.UseGrpcMetrics();
 
