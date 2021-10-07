@@ -49,7 +49,7 @@ jobs:
           context: .
           push: true
           tags: "ghcr.io/patrick-ivann/rapide-shortener/shortener:${{github.sha}}"
-          args: |
+          build-args: |
             RapideShortener_Kestrel__EndpointDefaults__Protocols=${{ env.PROTOCOLS }}
             RapideShortener_URLDatabaseSettings__ConnectionString=${{ env.CONNECTION_STRING }}
             RapideShortener_URLDatabaseSettings__DatabaseName=${{ env.DATABASE_NAME }}
