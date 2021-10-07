@@ -48,7 +48,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: "ghcr.io/patrick-ivann/rapide-shortener:${{github.sha}}"
+          tags: "ghcr.io/patrick-ivann/rapide-shortener/shortener:${{github.sha}}"
           args: |
             RapideShortener_Kestrel__EndpointDefaults__Protocols=${{ env.PROTOCOLS }}
             RapideShortener_URLDatabaseSettings__ConnectionString=${{ env.CONNECTION_STRING }}
@@ -65,7 +65,7 @@ jobs:
     env:
       APP_NAME: rapide-shortener-grpc
       NAMESPACE: production
-      IMAGE: ghcr.io/patrick-ivann/rapide-shortener
+      IMAGE: ghcr.io/patrick-ivann/rapide-shortener/shortener
       IMAGE_TAG: ${{github.sha}}
       FULL_DOMAIN: share.lunaar.net
       FULL_DOMAIN_GRPC: shortener.lunaar.net
